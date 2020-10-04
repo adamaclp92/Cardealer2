@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+option csharp_namespace = "Server";
+
+message BalanceRequest{
+	string uid = 1;
+}
+
+message BalanceResponse{
+	int32 balance = 1;
+}
+
+message User{
+	string username = 1;
+	string password = 2;
+}
+
+ message Session_Id { 
+	string id=1;
+	string message = 2;
+}
+
+message Result { 
+	string success=1;
+}
+
+message Car{
+	string numberplate = 1;
+	string brand = 2;
+	int32 vintage = 3;
+	int32 boughtprice = 4;
+	int32 currentvalue = 5;
+}
+
+message ListCarsRequest{
+	string uid=1;
+}
+
+message ListCarsResponse{
+	Car car = 1;
+}
+
+message ActualCarRequest{
+	string numberplate = 1;
+}
+
+message ActualCarResponse{
+	Car car = 1;
+}
+
+message PurchaseCarRequest{
+	Car car = 1;
+	string uid=2;
+}
+
+message PurchaseCarResponse{
+	Car car = 1;
+	string message = 2;
+}
+
+message SellCarRequest{
+	string numberplate = 1;
+}
+
+message SellCarResponse{
+	string message = 1;
+}
+
+message RepairCarRequest{
+	string numberplate = 1;
+}
+
+message RepairCarResponse{
+	string message = 1;
+}
+
+
+service CarDealing{
+  rpc Login(User) returns (Session_Id) {}
+  rpc Logout(Session_Id) returns (Result) {}
+  rpc Balance(BalanceRequest) returns (BalanceResponse) {}
+  rpc ListCars(ListCarsRequest) returns (stream ListCarsResponse) {}
+  rpc ActualCar(ActualCarRequest) returns (ActualCarResponse){}
+  rpc PurchaseCar(PurchaseCarRequest) returns (PurchaseCarResponse) {}
+  rpc SellCar(SellCarRequest) returns (SellCarResponse) {}
+  rpc RepairCar(RepairCarRequest) returns (RepairCarResponse) {}
+  }
